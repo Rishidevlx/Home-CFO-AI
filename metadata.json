@@ -1,0 +1,6 @@
+{
+  "name": "LyKSpire Home CFO AI",
+  "description": "A smart family financial wellness advisor simulator simulating a WhatsApp-powered budgeting assistant with real-time AI report generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
