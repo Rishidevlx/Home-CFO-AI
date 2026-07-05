@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
-import { createServer as createViteServer } from "vite";
+
 
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
@@ -593,7 +593,9 @@ async function startServer() {
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
+    const vitePkg = "vi" + "te";
+    const viteModule = await import(vitePkg);
+    const vite = await viteModule.createServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
