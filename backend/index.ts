@@ -1,8 +1,8 @@
 import express from "express";
+import { fileURLToPath } from 'url';
+import cors from "cors";
 import fs from "fs";
 import path from "path";
-
-
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import mysql from "mysql2/promise";
@@ -509,7 +509,9 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const promptFile = language === 'tamil' ? 'Personality prompt.md' : 'Personality prompt2.md';
-    const systemPromptBase = fs.readFileSync(path.join(process.cwd(), promptFile), 'utf-8');
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const systemPromptBase = fs.readFileSync(path.join(__dirname, promptFile), 'utf-8');
     
     const systemInstruction = systemPromptBase + 
        "\n\nCRITICAL RULE: If the user has provided enough information about their monthly income, family size, and fixed commitments (rent, EMI, etc.), you MUST generate a JSON report by responding ONLY with a JSON object containing { \"trigger_report\": true, \"salary\": <number>, \"family_size\": <number>, \"commitments\": [ { \"name\": \"...\", \"amount\": <number> } ] }. Do not include any other text if you output this JSON. If you don't have enough information, continue the conversation warmly.";
@@ -589,23 +591,6 @@ async function startServer() {
     // Vercel serverless environment does not need to start its own HTTP server
     // or serve static files, as Vercel handles static routing natively.
     return;
-  }
-
-  // Vite middleware for development
-  if (process.env.NODE_ENV !== "production") {
-    const vitePkg = "vi" + "te";
-    const viteModule = await import(vitePkg);
-    const vite = await viteModule.createServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
   }
 
   app.listen(PORT, "0.0.0.0", () => {

@@ -136,7 +136,7 @@ export default function App() {
     e.preventDefault();
     if (userName && userPhone && userEmail) {
       try {
-        const res = await fetch('/api/register', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: userName, phone: userPhone, email: userEmail })
@@ -242,7 +242,7 @@ export default function App() {
     fetchDbState();
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      fetch('/api/verify', {
+      fetch(`${import.meta.env.VITE_API_URL || ''}/api/verify`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       }).then(res => res.json()).then(data => {
