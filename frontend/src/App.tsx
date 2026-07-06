@@ -155,7 +155,7 @@ export default function App() {
 
   const saveChatHistory = async (sender: 'user' | 'bot', messageText: string) => {
     try {
-      await fetch('/api/save-chat', {
+      await fetch(`${import.meta.env.VITE_API_URL || ''}/api/save-chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -203,7 +203,7 @@ export default function App() {
   const fetchDbState = async () => {
     setLoadingDb(true);
     try {
-      const response = await fetch("/api/db-state");
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/db-state`);
       if (response.ok) {
         const data = await response.json();
         setUsers(data.users || []);
@@ -220,7 +220,7 @@ export default function App() {
   const resetDbState = async () => {
     setLoadingDb(true);
     try {
-      const response = await fetch("/api/db-reset", { method: "POST" });
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/db-reset`, { method: "POST" });
       if (response.ok) {
         const data = await response.json();
         setUsers(data.users);
@@ -319,7 +319,7 @@ export default function App() {
 
     // Request actual server-side analysis
     try {
-      const response = await fetch("/api/analyze", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -416,7 +416,7 @@ export default function App() {
       saveChatHistory("bot", nextMsg);
 
       try {
-        const analyzeRes = await fetch("/api/analyze", {
+        const analyzeRes = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/analyze`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -479,7 +479,7 @@ export default function App() {
     // Generate report instantly using the sidebar state
     setLoadingDb(true);
     try {
-      const response = await fetch("/api/analyze", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

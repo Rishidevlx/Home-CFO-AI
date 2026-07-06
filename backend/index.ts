@@ -10,6 +10,7 @@ import mysql from "mysql2/promise";
 dotenv.config();
 
 const app = express();
+app.use(cors());
 const PORT = 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "lykspire_super_secret_key_123";
 
