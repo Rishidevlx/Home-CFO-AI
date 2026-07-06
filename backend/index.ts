@@ -509,9 +509,7 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const promptFile = language === 'tamil' ? 'Personality prompt.md' : 'Personality prompt2.md';
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const systemPromptBase = fs.readFileSync(path.join(__dirname, promptFile), 'utf-8');
+    const systemPromptBase = fs.readFileSync(path.join(process.cwd(), promptFile), 'utf-8');
     
     const systemInstruction = systemPromptBase + 
        "\n\nCRITICAL RULE: If the user has provided enough information about their monthly income, family size, and fixed commitments (rent, EMI, etc.), you MUST generate a JSON report by responding ONLY with a JSON object containing { \"trigger_report\": true, \"salary\": <number>, \"family_size\": <number>, \"commitments\": [ { \"name\": \"...\", \"amount\": <number> } ] }. Do not include any other text if you output this JSON. If you don't have enough information, continue the conversation warmly.";
