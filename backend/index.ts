@@ -1,5 +1,5 @@
 import express from "express";
-import { fileURLToPath } from 'url';
+
 import cors from "cors";
 import fs from "fs";
 import path from "path";
@@ -598,4 +598,4 @@ async function startServer() {
 
 startServer();
 
-export default app;
+module.exports = app;
